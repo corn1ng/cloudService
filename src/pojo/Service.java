@@ -15,8 +15,10 @@ public class Service {
     private Double singlePrice;
     // 响应时间
     private Integer timeRate;
-
+    // 所属应用
     private Integer belongTenant;
+    // 时间窗口内时间PV
+    private Integer realPV;
 
     public Service(Integer serviceId, Integer serviceLevel,Integer belongApplication, Integer belongTenant,Double availbilityRate, Double compensateRate, Double singlePrice, Integer timeRate) {
         this.serviceId = serviceId;
@@ -30,6 +32,14 @@ public class Service {
     }
 
     public Service() {
+    }
+
+    public Integer getRealPV() {
+        return realPV;
+    }
+
+    public void setRealPV(Integer realPV) {
+        this.realPV = realPV;
     }
 
     public Integer getServiceLevel() {
