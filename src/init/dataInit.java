@@ -81,7 +81,7 @@ public class dataInit {
 
     public static void printTotal()
     {
-        System.out.println("租户总数=" + (tenId-1) + " 应用总数=" + (appId-1) + " 服务总数=" + (serId-1)+"  总PV="+pvId);
+        System.out.println("租户总数=" + (tenId-1) + " 应用总数=" + (appId-1) + " 服务总数=" + (serId-1)+"  SLA签约总PV="+pvId);
     }
 
     public static void printSLA()

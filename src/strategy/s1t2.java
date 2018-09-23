@@ -6,7 +6,7 @@ import java.util.List;
 
 public class s1t2 implements optimiseStrategy {
     @Override
-    public void selectStategy(List<Service> services) {
-
+    public List<Service> selectStategy(List<Service> services) {
+        return null;
     }
 }

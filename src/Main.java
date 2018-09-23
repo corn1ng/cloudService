@@ -2,7 +2,10 @@ import dispatch.ServiceLayer;
 import dispatch.dispatch;
 import init.dataInit;
 import init.pvInit;
+import pojo.Service;
 import strategy.t1s2;
+
+import static init.dataInit.services;
 
 public class Main {
 
@@ -23,15 +26,20 @@ public class Main {
 
 
             //获取每个时间片内的所有的真实访问量。
-            Integer turePV = pvInit.pvPerTime(dataInit.slas,dataInit.services);
+            Integer turePV = pvInit.pvPerTime(dataInit.slas,services);
 
             //打印所有服务信息
             //dataInit.printService();
-            dispatch.dispatchPV(totalPV,turePV,dataInit.slas,dataInit.services);
-            System.out.println("********");
+            dispatch.dispatchPV(totalPV,turePV,dataInit.slas,services);
+
 
             t1s2 stra =new t1s2();
-            stra.selectStategy(dataInit.services);
+            stra.selectStategy(services);
+
+            for(Service s:services)
+            {
+                System.out.println(s.tostring());
+            }
         }
 
 

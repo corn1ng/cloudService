@@ -16,7 +16,7 @@ public class pvInit {
         for(int i=0;i<slaList.size();i++)
         {
             Integer pv =slaList.get(i).getPageView();
-            Integer minusRealPV = Common.randomInteger(0,35);
+            Integer minusRealPV = Common.randomInteger(-10,35);
             services.get(i).setRealPV(pv-minusRealPV);
         }
         for(int i=0;i<services.size();i++)

@@ -27,6 +27,10 @@ public class Service {
     private Integer realPV;
     // 成本
     private Double cost;
+    // 准入的PV
+    private Integer admitPV;
+    // 拒绝的PV
+    private Integer rejectPV;
 
 
 
@@ -135,6 +139,23 @@ public class Service {
         ApplicationLevel = applicationLevel;
     }
 
+
+    public Integer getAdmitPV() {
+        return admitPV;
+    }
+
+    public void setAdmitPV(Integer admitPV) {
+        this.admitPV = admitPV;
+    }
+
+    public Integer getRejectPV() {
+        return rejectPV;
+    }
+
+    public void setRejectPV(Integer rejectPV) {
+        this.rejectPV = rejectPV;
+    }
+
     public String tostring() {
         return ( "服务ID="+getServiceId()
                 +"  租户ID="+getBelongTenant()
@@ -148,7 +169,9 @@ public class Service {
                 +"  响应时间="+getTimeRate()
                 +"  真实PV="+getRealPV()
                 +"  服务体量="+getServiceCapacity()
-                +"  成本="+getCost());
+                +"  成本="+getCost()
+                +"  准入量"+getAdmitPV()
+                +"  拒绝量"+getRejectPV());
 
     }
 }

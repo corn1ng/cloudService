@@ -12,7 +12,7 @@ import java.util.List;
 public class t1s2 implements optimiseStrategy {
 
     @Override
-    public void selectStategy(List<Service> services) {
+    public List<Service> selectStategy(List<Service> services) {
         Collections.sort(services, new Comparator<Service>() {
             @Override
             public int compare(Service o1, Service o2) {
@@ -53,9 +53,45 @@ public class t1s2 implements optimiseStrategy {
             }
         });
 
-        for(Service s:services)
+//        for(Service s:services)
+//        {
+//            System.out.println(s.tostring());
+//        }
+        return  services;
+    }
+
+    // 优选分数计算
+    public Integer calcuScore(List<Service> services)
+    {
+        Integer result = 0;
+        for(int i=0;i<services.size();i++)
         {
-            System.out.println(s.tostring());
+            if(services.get(i).getTenantLevel()==1)
+            {
+                result=result+1024;
+            }
+            else if(services.get(i).getTenantLevel()==2)
+            {
+                result=result+256;
+            }
+            else
+            {
+                result=result+64;
+            }
+
+            if(services.get(i).getServiceLevel()==1)
+            {
+                result=result+16;
+            }
+            else if(services.get(i).getServiceLevel()==2)
+            {
+                result=result+4;
+            }
+            else
+            {
+                result=result+1;
+            }
         }
+        return result;
     }
 }

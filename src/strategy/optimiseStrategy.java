@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface optimiseStrategy {
 
-    void selectStategy(List<Service> services);
+    List<Service> selectStategy(List<Service> services);
 }
