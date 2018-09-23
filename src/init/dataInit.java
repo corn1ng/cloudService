@@ -70,6 +70,7 @@ public class dataInit {
                 }
                 appId++;
                 applicationList.add(application);
+                /////////////
             }
 
         }
