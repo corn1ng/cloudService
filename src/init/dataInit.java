@@ -1,13 +1,11 @@
 package init;
 
-import Comm.Common;
+import common.Common;
 import pojo.Application;
 import pojo.SLA;
 import pojo.Service;
 import pojo.Tenant;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -62,11 +60,13 @@ public class dataInit {
                     service.setServiceCapacity(serviceCapacity);
                     service.setCost(cost);
                     service.setTimeRate(timeRate);
+                    service.setTenantLevel(tenantLevel);
+                    service.setApplicationLevel(applicationLevel);
 
                     pvId =pvId+pageView;
                     Double price = cost+(random.nextFloat() * (5.0-2.0)+2.0)*pageView/10.0;
                     price=Common.hold2(price);
-                    SLA sla = new SLA(serId,tenId,appId,tenantLevel, applicationLevel, service,pageView, price);
+                    SLA sla = new SLA(serId,tenId,appId, service,pageView, price);
                     serId++;
                     serviceList.add(service);
                     slas.add(sla);
@@ -84,11 +84,19 @@ public class dataInit {
         System.out.println("租户总数=" + (tenId-1) + " 应用总数=" + (appId-1) + " 服务总数=" + (serId-1)+"  总PV="+pvId);
     }
 
-    public static void printService()
+    public static void printSLA()
     {
         for(SLA s:slas)
         {
             System.out.println(s.toString());
+        }
+    }
+
+    public static void printService()
+    {
+        for(Service s:services)
+        {
+            System.out.println(s.tostring());
         }
     }
 }

@@ -1,6 +1,6 @@
 package init;
 
-import Comm.Common;
+import common.Common;
 import pojo.SLA;
 import pojo.Service;
 
@@ -23,7 +23,7 @@ public class pvInit {
         {
             truePV =truePV+services.get(i).getRealPV();
         }
-        System.out.println("实际使用PV="+truePV);
+        //System.out.println("实际使用PV="+truePV);
         return truePV;
     }
 }

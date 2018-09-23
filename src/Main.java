@@ -1,15 +1,8 @@
-import Comm.Common;
 import dispatch.ServiceLayer;
+import dispatch.dispatch;
 import init.dataInit;
 import init.pvInit;
-import pojo.Application;
-import pojo.SLA;
-import pojo.Service;
-import pojo.Tenant;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import strategy.t1s2;
 
 public class Main {
 
@@ -20,15 +13,25 @@ public class Main {
         // 输出SLA统计数据
         dataInit.printTotal();
 
+
         // 循环100个时间片
-        Integer time =100;
+        Integer time =1;
         for(int i=0;i<time;i++)
         {
             // 获取当前时间片服务层提供的访问量。
-            ServiceLayer.printTotalPV();
+            Integer totalPV =ServiceLayer.printTotalPV();
 
-            // 获取当前所有的访问量。
-            pvInit.pvPerTime(dataInit.slas,dataInit.services);
+
+            //获取每个时间片内的所有的真实访问量。
+            Integer turePV = pvInit.pvPerTime(dataInit.slas,dataInit.services);
+
+            //打印所有服务信息
+            //dataInit.printService();
+            dispatch.dispatchPV(totalPV,turePV,dataInit.slas,dataInit.services);
+            System.out.println("********");
+
+            t1s2 stra =new t1s2();
+            stra.selectStategy(dataInit.services);
         }
 
 

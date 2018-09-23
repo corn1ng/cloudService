@@ -1,4 +1,4 @@
-package Comm;
+package common;
 
 import pojo.Service;
 import pojo.highService;
