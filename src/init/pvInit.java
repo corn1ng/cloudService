@@ -8,9 +8,7 @@ import java.util.List;
 
 public class pvInit {
 
-
-
-
+    
     public static Integer pvPerTime(List<SLA> slaList, List<Service> services)
     {
         Integer truePV =0;

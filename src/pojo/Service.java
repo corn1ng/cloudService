@@ -11,6 +11,8 @@ public class Service {
     private Double availbilityRate;
     // 赔偿标准
     private Double compensateRate;
+    // 服务体量
+    private Integer serviceCapacity;
     //单价比率
     private Double singlePrice;
     // 响应时间
@@ -19,16 +21,17 @@ public class Service {
     private Integer belongTenant;
     // 时间窗口内时间PV
     private Integer realPV;
+    // 成本
+    private Double cost;
 
-    public Service(Integer serviceId, Integer serviceLevel,Integer belongApplication, Integer belongTenant,Double availbilityRate, Double compensateRate, Double singlePrice, Integer timeRate) {
-        this.serviceId = serviceId;
-        this.serviceLevel = serviceLevel;
-        this.belongApplication =belongApplication;
-        this.belongTenant=belongTenant;
-        this.availbilityRate = availbilityRate;
-        this.compensateRate = compensateRate;
-        this.singlePrice = singlePrice;
-        this.timeRate = timeRate;
+
+
+    public Double getCost() {
+        return cost;
+    }
+
+    public void setCost(Double cost) {
+        this.cost = cost;
     }
 
     public Service() {
@@ -106,6 +109,14 @@ public class Service {
         this.belongTenant = belongTenant;
     }
 
+    public Integer getServiceCapacity() {
+        return serviceCapacity;
+    }
+
+    public void setServiceCapacity(Integer serviceCapacity) {
+        this.serviceCapacity = serviceCapacity;
+    }
+
     public String tostring() {
         return ( "服务ID="+getServiceId()
                 +"  租户ID="+getBelongTenant()
@@ -114,7 +125,9 @@ public class Service {
                 +"  可用率="+getAvailbilityRate()
                 +"  赔偿标准="+getCompensateRate()
                 +"  服务单价="+getSinglePrice()
-                +"  响应时间="+getTimeRate());
+                +"  响应时间="+getTimeRate()
+                +"  服务体量="+getServiceCapacity()
+                +"  成本="+getCost());
 
     }
 }

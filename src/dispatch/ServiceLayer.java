@@ -12,7 +12,7 @@ public class ServiceLayer {
     public static Integer getTotalPV()
     {
         Random random =new Random();
-        totalPV = dataInit.pvId-Common.randomInteger(5000,8000);
+        totalPV = dataInit.pvId-Common.randomInteger(6000,11000);
         return totalPV;
     }
 

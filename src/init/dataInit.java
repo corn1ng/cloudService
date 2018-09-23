@@ -53,16 +53,20 @@ public class dataInit {
                 for (int k = 1; k < servicePerApplication; k++) {
                     Integer serviceLevel = Common.randomInteger(1,3);
                     Service service = Common.toService(serviceLevel, serId);
+                    Integer serviceCapacity = Common.randomInteger(1,12);
+                    Double cost =serviceCapacity * serviceLevel * pageView * 2 / 5.0;
+                    Integer timeRate = Common.randomInteger(1,2);
+
                     service.setBelongApplication(appId);
                     service.setBelongTenant(tenId);
-                    Integer timeRate = Common.randomInteger(1,2);
+                    service.setServiceCapacity(serviceCapacity);
+                    service.setCost(cost);
                     service.setTimeRate(timeRate);
-                    Integer serviceCapacity = Common.randomInteger(1,12);
 
                     pvId =pvId+pageView;
-                    Double price = serviceCapacity * serviceLevel * pageView * 2 / 5.0+random.nextFloat() * (5.0-2.0)+2.0;
+                    Double price = cost+(random.nextFloat() * (5.0-2.0)+2.0)*pageView/10.0;
                     price=Common.hold2(price);
-                    SLA sla = new SLA(serId,tenId,appId,tenantLevel, applicationLevel, service, serviceCapacity, pageView, price);
+                    SLA sla = new SLA(serId,tenId,appId,tenantLevel, applicationLevel, service,pageView, price);
                     serId++;
                     serviceList.add(service);
                     slas.add(sla);

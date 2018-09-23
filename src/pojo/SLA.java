@@ -14,23 +14,20 @@ public class SLA {
     private Integer TenantLevel;
     // 应用等级
     private Integer ApplicationLevel;
-    // 服务等级
+    // 服务
     private Service service;
-    // 服务体量
-    private Integer serviceCapacity;
     // 访问量
     private Integer pageView;
     //总价
     private Double price;
 
-    public SLA(Integer SLAId,Integer tenantId,Integer appId,Integer tenantLevel, Integer applicationLevel, Service service, Integer serviceCapacity, Integer pageView, Double price) {
+    public SLA(Integer SLAId,Integer tenantId,Integer appId,Integer tenantLevel, Integer applicationLevel, Service service, Integer pageView, Double price) {
         this.SLAId = SLAId;
         this.tenantId=tenantId;
         this.appId=appId;
         this.TenantLevel = tenantLevel;
         this.ApplicationLevel = applicationLevel;
         this.service = service;
-        this.serviceCapacity = serviceCapacity;
         this.pageView = pageView;
         this.price = price;
     }
@@ -65,14 +62,6 @@ public class SLA {
 
     public void setService(Service service) {
         this.service = service;
-    }
-
-    public Integer getServiceCapacity() {
-        return serviceCapacity;
-    }
-
-    public void setServiceCapacity(Integer serviceCapacity) {
-        this.serviceCapacity = serviceCapacity;
     }
 
     public Integer getPageView() {
@@ -116,7 +105,7 @@ public class SLA {
                 ", 租户等级=" + TenantLevel +
                 ", 应用等级=" + ApplicationLevel +
                 ", 服务等级=" + service.getServiceLevel() +
-                ", 服务容量=" + serviceCapacity +
+                ", 服务容量=" + service.getServiceCapacity() +
                 ", 服务PV=" + pageView +
                 ", 价格=" + price +
                 '}';

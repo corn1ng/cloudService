@@ -15,12 +15,23 @@ public class Main {
 
     public static void main(String[] args) {
 
-
+        // 数据初始化
         dataInit.dataInitFunc();
+        // 输出SLA统计数据
         dataInit.printTotal();
-        ServiceLayer.printTotalPV();
-        //dataInit.printService();
-        pvInit.pvPerTime(dataInit.slas,dataInit.services);
+
+        // 循环100个时间片
+        Integer time =100;
+        for(int i=0;i<time;i++)
+        {
+            // 获取当前时间片服务层提供的访问量。
+            ServiceLayer.printTotalPV();
+
+            // 获取当前所有的访问量。
+            pvInit.pvPerTime(dataInit.slas,dataInit.services);
+        }
+
+
 
 
 
