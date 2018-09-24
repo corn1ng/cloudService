@@ -78,7 +78,6 @@ public class t1s2 implements optimiseStrategy {
             {
                 result=result+64;
             }
-
             if(services.get(i).getServiceLevel()==1)
             {
                 result=result+16;

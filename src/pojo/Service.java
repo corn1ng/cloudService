@@ -159,19 +159,20 @@ public class Service {
     public String tostring() {
         return ( "服务ID="+getServiceId()
                 +"  租户ID="+getBelongTenant()
-                +"  租户等级="+getTenantLevel()
                 +"  应用ID="+getBelongApplication()
+                +"  租户等级="+getTenantLevel()
                 +"  应用等级"+getApplicationLevel()
                 +"  服务等级="+getServiceLevel()
+                +"  真实PV="+getRealPV()
+                +"  准入量"+getAdmitPV()
+                +"  拒绝量"+getRejectPV()
                 +"  可用率="+getAvailbilityRate()
                 +"  赔偿标准="+getCompensateRate()
                 +"  服务单价="+getSinglePrice()
                 +"  响应时间="+getTimeRate()
-                +"  真实PV="+getRealPV()
                 +"  服务体量="+getServiceCapacity()
                 +"  成本="+getCost()
-                +"  准入量"+getAdmitPV()
-                +"  拒绝量"+getRejectPV());
+                );
 
     }
 }

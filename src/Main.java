@@ -22,7 +22,7 @@ public class Main {
         for(int i=0;i<time;i++)
         {
             // 获取当前时间片服务层提供的访问量。
-            Integer totalPV =ServiceLayer.printTotalPV();
+            Integer totalPV =ServiceLayer.getTotalPV();
 
 
             //获取每个时间片内的所有的真实访问量。
@@ -30,6 +30,8 @@ public class Main {
 
             //打印所有服务信息
             //dataInit.printService();
+
+            // 根据提供与实际进行判断与调度。
             dispatch.dispatchPV(totalPV,turePV,dataInit.slas,services);
 
 
@@ -41,16 +43,5 @@ public class Main {
                 System.out.println(s.tostring());
             }
         }
-
-
-
-
-
     }
-
-
-
-
-
-
 }

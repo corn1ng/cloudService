@@ -19,11 +19,13 @@ public class pvInit {
             Integer minusRealPV = Common.randomInteger(-10,35);
             services.get(i).setRealPV(pv-minusRealPV);
         }
+
         for(int i=0;i<services.size();i++)
         {
             truePV =truePV+services.get(i).getRealPV();
         }
-        //System.out.println("实际使用PV="+truePV);
+
+        // System.out.println("实际使用PV="+truePV);
         return truePV;
     }
 }
