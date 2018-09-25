@@ -1,11 +1,8 @@
 package dispatch;
 
-import init.dataInit;
-import org.omg.PortableInterceptor.INACTIVE;
+import init.DataInit;
 import pojo.SLA;
 import pojo.Service;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -119,7 +116,7 @@ public class YCalgorithm {
             }
             else
             {   // 如果不满足的话，不仅不计算利润，还要往回扣钱。
-                profitSum-= dataInit.slas.get(i).getService().getCompensateRate() * profit.get(i);
+                profitSum-= DataInit.slas.get(i).getService().getCompensateRate() * profit.get(i);
             }
         }
         if (weightSum > capacity) {
@@ -264,13 +261,13 @@ public class YCalgorithm {
 
     //遗传算法
     public List<List<Integer>> solve() {
-        readDate(dataInit.services,dataInit.slas);
+        readDate(DataInit.services,DataInit.slas);
         initPopulation();
         for(int i = 0; i < maxgen; i++) {
             //计算种群适应度值
             calcFitness();
             //记录最优个体
-            recBest(i);
+            //recBest(i);
             //进行种群选择
             select();
             //进行交叉
@@ -286,8 +283,7 @@ public class YCalgorithm {
 //                totalWeight += weight.get(i);
 //            }
 //        }
-//        System.out.println("total profit:" + bestFitness);
-//        System.out.println("total weight:" + totalWeight);
+
         return population;
     }
 
