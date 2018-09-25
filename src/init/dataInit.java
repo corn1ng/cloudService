@@ -24,6 +24,12 @@ public class dataInit {
     // 总访问量计数器
     public static Integer pvId =0;
 
+    // 总成本计数器
+    public static Double costId =0.0;
+
+    //总价格计数器
+    public static Double priceId =0.0;
+
     public static List<SLA> slas =new ArrayList<>();
 
     public static List<Service> services =new ArrayList<>();
@@ -41,7 +47,7 @@ public class dataInit {
             Integer tenantLevel = Common.randomInteger(1,3);
             Tenant tenant = new Tenant(tenId, tenantLevel);
             Integer applicationPerTenant = Common.randomInteger(1,10);
-            List applicationList = new ArrayList(applicationPerTenant);
+            List<Application> applicationList = new ArrayList<>(applicationPerTenant);
             for (int j = 1; j <= applicationPerTenant; j++) {
                 Integer applicationLevel = Common.randomInteger(1,3);
                 Application application = new Application(appId, applicationLevel, tenId);

@@ -1,5 +1,6 @@
 package dispatch;
 
+import init.dataInit;
 import pojo.SLA;
 import pojo.Service;
 import strategy.optimiseStrategy;
@@ -13,7 +14,6 @@ import java.util.Random;
 public class dispatch {
     public static void dispatchPV(Integer servicePV, Integer realPV, List<SLA> slaList, List<Service> services)
     {
-
         List<Service> selectService=new ArrayList<>();
 
         // 如果提供的多余实际需要的，低负载状态，准入。
@@ -27,15 +27,27 @@ public class dispatch {
             optimiseStrategy strategy =new t1s2();
             services =strategy.selectStategy(services);
             int i =0;
-            for(i=0;surpuls>0;i++)
+
+            /*
+            * 价格计算start
+            * */
+            for(int c=0;c<slaList.size();c++)
+            {
+                dataInit.priceId =slaList.get(c).getPrice()+dataInit.priceId;
+                dataInit.costId =services.get(c).getCost()+dataInit.costId;
+            }
+
+            /*价格计算结束*/
+            for(i=0;surpuls>=0||i<services.size();i++)
             {
                 if(services.get(i).getRealPV()-slaList.get(i).getPageView()>0)
                 {
                     // 超出SLA规定的使用
                     surpuls=surpuls-(services.get(i).getRealPV()-slaList.get(i).getPageView());
-                    /*
-                    * 双倍价格计算
-                    * */
+
+                    //双倍价格计算
+                    dataInit.priceId =dataInit.priceId+slaList.get(i).getPrice();
+
                     services.get(i).setAdmitPV(services.get(i).getRealPV());
                     services.get(i).setRejectPV(0);
                 }
@@ -55,6 +67,7 @@ public class dispatch {
                 services.get(i).setAdmitPV(services.get(i).getRealPV());
                 services.get(i).setRejectPV(0);
             }
+            System.out.println("当前");
         }
         else
         {
@@ -72,26 +85,30 @@ public class dispatch {
             else
             {
                 System.out.println("已超载！"+" 服务层提供"+servicePV+" 实际使用"+realPV);
-                // 遗传算法start
                 Random random =new Random();
-                List<List<Integer>> result  =new ArrayList<>(20);
-                for(int i=0;i<20;i++)
-                {
-                    List<Integer> list =new ArrayList<>();
-                    for(int j=0;j<services.size();j++)
-                    {
-                        Integer index =random.nextInt(3)+1;
-                        if(index!=1)
-                            index=0;
-                        list.add(index);
-                    }
-//                    for(int k=0;k<list.size();k++)
+                List<List<Integer>> result  =null;
+                // 遗传算法start
+//
+//                for(int i=0;i<20;i++)
+//                {
+//                    List<Integer> list =new ArrayList<>();
+//                    for(int j=0;j<services.size();j++)
 //                    {
-//                        System.out.print(list.get(k)+" ");
+//                        Integer index =random.nextInt(3)+1;
+//                        if(index!=1)
+//                            index=0;
+//                        list.add(index);
 //                    }
-//                    System.out.println(" ");
-                    result.add(list);
-                }
+////                    for(int k=0;k<list.size();k++)
+////                    {
+////                        System.out.print(list.get(k)+" ");
+////                    }
+////                    System.out.println(" ");
+//                    result.add(list);
+//                }
+
+                YCalgorithm alg = new YCalgorithm(servicePV, services.size(),services.size()/2, 2000, 0.5f, 0.05f, 0.1f);
+                result =alg.solve();
 
                 // end
                 // 选20的结果

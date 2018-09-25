@@ -13,6 +13,17 @@ public class Main {
 
         // 数据初始化
         dataInit.dataInitFunc();
+
+
+//        System.out.println("******************");
+//        for(int i=0;i<services.size();i++)
+//        {
+//            System.out.println(services.get(i).tostring());
+//        }
+//
+//
+//        System.out.println("******************");
+
         // 输出SLA统计数据
         dataInit.printTotal();
 
