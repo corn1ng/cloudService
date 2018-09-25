@@ -74,6 +74,7 @@ public class dataInit {
                 }
                 appId++;
                 applicationList.add(application);
+                tenant.setApplicationList(applicationList);
             }
 
         }
