@@ -266,7 +266,7 @@ public class YCalgorithm {
         System.out.println("scale="+ scale + "reserve=" +DataInit.goodSelect);
 
         for (int i = 0; i < DataInit.goodSelect; i++) {
-            System.out.println(sortFitness[i].fitness);
+            //System.out.println(sortFitness[i].fitness);
             List<Integer> pop =new ArrayList<>(len);
             for (int j = 0; j < len; j++) {
                 pop.add(population[sortFitness[i].index][j] ? 1 : 0);
