@@ -1,7 +1,7 @@
 package dispatch;
 
-import Comm.Common;
-import init.dataInit;
+import common.Common;
+import init.DataInit;
 
 import java.util.Random;
 
@@ -12,13 +12,15 @@ public class ServiceLayer {
     public static Integer getTotalPV()
     {
         Random random =new Random();
-        totalPV = dataInit.pvId-Common.randomInteger(5000,8000);
+        totalPV = DataInit.pvId-Common.randomInteger(2000,8000);
+        if(totalPV<0) totalPV =Common.randomInteger(2000,8000);
         return totalPV;
     }
 
-    public static void printTotalPV()
+    public static Integer printTotalPV()
     {
-        System.out.println("服务层提供PV="+getTotalPV());
+        //System.out.println("服务层提供PV="+getTotalPV());
+        return getTotalPV();
     }
 
 }

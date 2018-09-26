@@ -10,27 +10,24 @@ public class SLA {
     private Integer tenantId;
     // 应用序号
     private Integer appId;
-    //租户等级
-    private Integer TenantLevel;
-    // 应用等级
-    private Integer ApplicationLevel;
-    // 服务等级
+//    //租户等级
+//    private Integer TenantLevel;
+//    // 应用等级
+//    private Integer ApplicationLevel;
+    // 服务
     private Service service;
-    // 服务体量
-    private Integer serviceCapacity;
     // 访问量
     private Integer pageView;
     //总价
     private Double price;
 
-    public SLA(Integer SLAId,Integer tenantId,Integer appId,Integer tenantLevel, Integer applicationLevel, Service service, Integer serviceCapacity, Integer pageView, Double price) {
+    public SLA(Integer SLAId,Integer tenantId,Integer appId, Service service, Integer pageView, Double price) {
         this.SLAId = SLAId;
         this.tenantId=tenantId;
         this.appId=appId;
-        this.TenantLevel = tenantLevel;
-        this.ApplicationLevel = applicationLevel;
+//        this.TenantLevel = tenantLevel;
+//        this.ApplicationLevel = applicationLevel;
         this.service = service;
-        this.serviceCapacity = serviceCapacity;
         this.pageView = pageView;
         this.price = price;
     }
@@ -43,21 +40,21 @@ public class SLA {
         this.SLAId = SLAId;
     }
 
-    public Integer getTenantLevel() {
-        return TenantLevel;
-    }
-
-    public void setTenantLevel(Integer tenantLevel) {
-        TenantLevel = tenantLevel;
-    }
-
-    public Integer getApplicationLevel() {
-        return ApplicationLevel;
-    }
-
-    public void setApplicationLevel(Integer applicationLevel) {
-        ApplicationLevel = applicationLevel;
-    }
+//    public Integer getTenantLevel() {
+//        return TenantLevel;
+//    }
+//
+//    public void setTenantLevel(Integer tenantLevel) {
+//        TenantLevel = tenantLevel;
+//    }
+//
+//    public Integer getApplicationLevel() {
+//        return ApplicationLevel;
+//    }
+//
+//    public void setApplicationLevel(Integer applicationLevel) {
+//        ApplicationLevel = applicationLevel;
+//    }
 
     public Service getService() {
         return service;
@@ -65,14 +62,6 @@ public class SLA {
 
     public void setService(Service service) {
         this.service = service;
-    }
-
-    public Integer getServiceCapacity() {
-        return serviceCapacity;
-    }
-
-    public void setServiceCapacity(Integer serviceCapacity) {
-        this.serviceCapacity = serviceCapacity;
     }
 
     public Integer getPageView() {
@@ -113,12 +102,12 @@ public class SLA {
                 "SLA& 服务ID=" + SLAId +
                 ", 租户ID=" + tenantId +
                 ", 应用ID=" + appId +
-                ", 租户等级=" + TenantLevel +
-                ", 应用等级=" + ApplicationLevel +
+//                ", 租户等级=" + TenantLevel +
+//                ", 应用等级=" + ApplicationLevel +
                 ", 服务等级=" + service.getServiceLevel() +
-                ", 服务容量=" + serviceCapacity +
-                ", 服务PV=" + pageView +
-                ", 价格=" + price +
+                ", 服务容量=" + service.getServiceCapacity() +
+                ", SLA服务PV=" + pageView +
+                ", 总价格=" + price +
                 '}';
     }
 }

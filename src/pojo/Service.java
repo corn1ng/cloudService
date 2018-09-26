@@ -7,31 +7,39 @@ public class Service {
     private Integer serviceLevel;
     // 所属应用
     private Integer belongApplication;
+    //租户等级
+    private Integer TenantLevel;
+    // 应用等级
+    private Integer ApplicationLevel;
     // 可用率
     private Double availbilityRate;
     // 赔偿标准
     private Double compensateRate;
+    // 服务体量
+    private Integer serviceCapacity;
     //单价比率
     private Double singlePrice;
     // 响应时间
     private Integer timeRate;
-    // 所属应用
+
     private Integer belongTenant;
     // 时间窗口内时间PV
     private Integer realPV;
+    // 成本
+    private Double cost;
+    // 准入的PV
+    private Integer admitPV;
+    // 拒绝的PV
+    private Integer rejectPV;
 
-    public Service(Integer serviceId, Integer serviceLevel,Integer belongApplication, Integer belongTenant,Double availbilityRate, Double compensateRate, Double singlePrice, Integer timeRate) {
-        this.serviceId = serviceId;
-        this.serviceLevel = serviceLevel;
-        this.belongApplication =belongApplication;
-        this.belongTenant=belongTenant;
-        this.availbilityRate = availbilityRate;
-        this.compensateRate = compensateRate;
-        this.singlePrice = singlePrice;
-        this.timeRate = timeRate;
+
+
+    public Double getCost() {
+        return cost;
     }
 
-    public Service() {
+    public void setCost(Double cost) {
+        this.cost = cost;
     }
 
     public Integer getRealPV() {
@@ -106,15 +114,65 @@ public class Service {
         this.belongTenant = belongTenant;
     }
 
+    public Integer getServiceCapacity() {
+        return serviceCapacity;
+    }
+
+    public void setServiceCapacity(Integer serviceCapacity) {
+        this.serviceCapacity = serviceCapacity;
+    }
+
+
+    public Integer getTenantLevel() {
+        return TenantLevel;
+    }
+
+    public void setTenantLevel(Integer tenantLevel) {
+        TenantLevel = tenantLevel;
+    }
+
+    public Integer getApplicationLevel() {
+        return ApplicationLevel;
+    }
+
+    public void setApplicationLevel(Integer applicationLevel) {
+        ApplicationLevel = applicationLevel;
+    }
+
+
+    public Integer getAdmitPV() {
+        return admitPV;
+    }
+
+    public void setAdmitPV(Integer admitPV) {
+        this.admitPV = admitPV;
+    }
+
+    public Integer getRejectPV() {
+        return rejectPV;
+    }
+
+    public void setRejectPV(Integer rejectPV) {
+        this.rejectPV = rejectPV;
+    }
+
     public String tostring() {
         return ( "服务ID="+getServiceId()
                 +"  租户ID="+getBelongTenant()
                 +"  应用ID="+getBelongApplication()
+                +"  租户等级="+getTenantLevel()
+                +"  应用等级"+getApplicationLevel()
                 +"  服务等级="+getServiceLevel()
+                +"  真实PV="+getRealPV()
+                +"  准入量"+getAdmitPV()
+                +"  拒绝量"+getRejectPV()
                 +"  可用率="+getAvailbilityRate()
                 +"  赔偿标准="+getCompensateRate()
                 +"  服务单价="+getSinglePrice()
-                +"  响应时间="+getTimeRate());
+                +"  响应时间="+getTimeRate()
+                +"  服务体量="+getServiceCapacity()
+                +"  成本="+getCost()
+                );
 
     }
 }
