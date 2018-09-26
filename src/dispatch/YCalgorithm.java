@@ -269,10 +269,10 @@ public class YCalgorithm {
         }
         Arrays.sort(sortFitness);
         List<List<Integer> > endPopulation = new ArrayList<>();
-        int reserve = (int) (scale * k / 10);
-        System.out.println("scale="+ scale + "reserve=" +reserve);
+        DataInit.goodSelect = (int) (scale * k / 10);
+        System.out.println("scale="+ scale + "reserve=" +DataInit.goodSelect);
 
-        for (int i = 0; i < reserve; i++) {
+        for (int i = 0; i < DataInit.goodSelect; i++) {
             System.out.println(sortFitness[i].fitness);
             List<Integer> pop =new ArrayList<>(len);
             for (int j = 0; j < len; j++) {
@@ -348,7 +348,7 @@ public class YCalgorithm {
         long before6= System.currentTimeMillis();//获取当前系统时间(毫秒)
         List<List<Integer>> in =endSelect(2);
         long after6= System.currentTimeMillis();//获取当前系统时间(毫秒)
-        System.out.println("优选时间"+ (after6-before6));
+        System.out.println("取前K%的时间"+ (after6-before6));
         t6 =t6+after6-before6;
 
 //        int totalWeight = 0;
