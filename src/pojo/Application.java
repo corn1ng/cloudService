@@ -12,7 +12,6 @@ public class Application {
 
     private List<Service> serviceList;
 
-
     public Application()
     {
 

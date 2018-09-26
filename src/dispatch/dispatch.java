@@ -1,20 +1,19 @@
 package dispatch;
 
-import init.dataInit;
+import init.DataInit;
 import pojo.SLA;
 import pojo.Service;
 import strategy.optimiseStrategy;
 import strategy.t1s2;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 public class dispatch {
     public static void dispatchPV(Integer servicePV, Integer realPV, List<SLA> slaList, List<Service> services)
     {
-        List<Service> selectService=new ArrayList<>();
+        //List<Service> selectService=new ArrayList<>();
 
         // 如果提供的多余实际需要的，低负载状态，准入。
         // 默认非严格模式
@@ -30,23 +29,22 @@ public class dispatch {
 
             /*
             * 价格计算start
-            * */
+            */
             for(int c=0;c<slaList.size();c++)
             {
-                dataInit.priceId =slaList.get(c).getPrice()+dataInit.priceId;
-                dataInit.costId =services.get(c).getCost()+dataInit.costId;
+                DataInit.priceId =slaList.get(c).getPrice()+DataInit.priceId;
+                DataInit.costId =services.get(c).getCost()+DataInit.costId;
             }
-
             /*价格计算结束*/
-            for(i=0;surpuls>=0||i<services.size();i++)
+            for(i=0;surpuls>=0 && i<services.size();i++)
             {
-                if(services.get(i).getRealPV()-slaList.get(i).getPageView()>0)
+                if((services.get(i).getRealPV()-slaList.get(i).getPageView())>0)
                 {
                     // 超出SLA规定的使用
                     surpuls=surpuls-(services.get(i).getRealPV()-slaList.get(i).getPageView());
 
                     //双倍价格计算
-                    dataInit.priceId =dataInit.priceId+slaList.get(i).getPrice();
+                    DataInit.priceId =DataInit.priceId+slaList.get(i).getPrice();
 
                     services.get(i).setAdmitPV(services.get(i).getRealPV());
                     services.get(i).setRejectPV(0);
@@ -64,10 +62,14 @@ public class dispatch {
                     services.get(i).setAdmitPV(slaList.get(i).getPageView());
                     services.get(i).setRejectPV(services.get(i).getRealPV()-slaList.get(i).getPageView());
                 }
-                services.get(i).setAdmitPV(services.get(i).getRealPV());
-                services.get(i).setRejectPV(0);
+                else
+                {
+                    services.get(i).setAdmitPV(services.get(i).getRealPV());
+                    services.get(i).setRejectPV(0);
+                }
+
             }
-            System.out.println("当前");
+            //System.out.println("当前");
         }
         else
         {
@@ -80,6 +82,7 @@ public class dispatch {
                     services.get(i).setAdmitPV(services.get(i).getRealPV());
                     services.get(i).setRejectPV(0);
                 }
+                System.out.println("未达到100%，已准入");
             }
             // 超载情况
             else
@@ -107,7 +110,7 @@ public class dispatch {
 //                    result.add(list);
 //                }
 
-                YCalgorithm alg = new YCalgorithm(servicePV, services.size(),services.size()/2, 2000, 0.5f, 0.05f, 0.1f);
+                YCalgorithm alg = new YCalgorithm(servicePV, services.size(),services.size()/2, 200, 0.5f, 0.05f, 0.1f);
                 result =alg.solve();
 
                 // end
@@ -128,7 +131,7 @@ public class dispatch {
                             serviceList.add(services.get(i));
                         }
                     }
-                    Integer res =((t1s2) strategy).calcuScore(serviceList);
+                    Integer res =t1s2.calcuScore(serviceList);
                     // 从20种情况中选择此背包。
                     if(res>max)
                     {
@@ -139,7 +142,7 @@ public class dispatch {
                 
                 for(int i=0;i<services.size();i++)
                 {
-                    System.out.print(bag.get(i)+" ");
+                    // System.out.print(bag.get(i)+" ");
                     if(bag.get(i)==1)
                     {
                         services.get(i).setAdmitPV(services.get(i).getRealPV());
@@ -151,10 +154,7 @@ public class dispatch {
                         services.get(i).setRejectPV(services.get(i).getRealPV());
                     }
                 }
-
                 System.out.println(" ");
-
-
             }
         }
     }

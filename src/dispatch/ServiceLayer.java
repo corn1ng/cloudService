@@ -1,7 +1,7 @@
 package dispatch;
 
 import common.Common;
-import init.dataInit;
+import init.DataInit;
 
 import java.util.Random;
 
@@ -12,7 +12,8 @@ public class ServiceLayer {
     public static Integer getTotalPV()
     {
         Random random =new Random();
-        totalPV = dataInit.pvId-Common.randomInteger(2000,8000);
+        totalPV = DataInit.pvId-Common.randomInteger(2000,8000);
+        if(totalPV<0) totalPV =Common.randomInteger(2000,8000);
         return totalPV;
     }
 

@@ -1,18 +1,19 @@
 import dispatch.ServiceLayer;
 import dispatch.dispatch;
-import init.dataInit;
-import init.pvInit;
+import init.DataInit;
+import init.PvInit;
 import pojo.Service;
 import strategy.t1s2;
-
-import static init.dataInit.services;
+import static init.DataInit.services;
+import static init.DataInit.slas;
 
 public class Main {
 
     public static void main(String[] args) {
 
         // 数据初始化
-        dataInit.dataInitFunc();
+        // 初始化 租户 应用 服务 SLA
+        DataInit.dataInitFunc();
 
 
 //        System.out.println("******************");
@@ -24,10 +25,10 @@ public class Main {
 //
 //        System.out.println("******************");
 
-        // 输出SLA统计数据
-        dataInit.printTotal();
+        // 输出初始化数据的基础统计数据
+        DataInit.printTotal();
 
-
+        // 开始调度。
         // 循环100个时间片
         Integer time =1;
         for(int i=0;i<time;i++)
@@ -35,19 +36,16 @@ public class Main {
             // 获取当前时间片服务层提供的访问量。
             Integer totalPV =ServiceLayer.getTotalPV();
 
-
             //获取每个时间片内的所有的真实访问量。
-            Integer turePV = pvInit.pvPerTime(dataInit.slas,services);
+            Integer turePV = PvInit.pvPerTime(slas,services);
 
-            //打印所有服务信息
-            //dataInit.printService();
 
             // 根据提供与实际进行判断与调度。
-            dispatch.dispatchPV(totalPV,turePV,dataInit.slas,services);
+            dispatch.dispatchPV(totalPV,turePV,slas,services);
 
 
             t1s2 stra =new t1s2();
-            stra.selectStategy(services);
+            //stra.selectStategy(services);
 
             for(Service s:services)
             {

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class dataInit {
+public class DataInit {
 
     // 租户计数器
     public static Integer tenId = 1;
@@ -30,8 +30,10 @@ public class dataInit {
     //总价格计数器
     public static Double priceId =0.0;
 
+    // SLA 列表
     public static List<SLA> slas =new ArrayList<>();
 
+    // 服务列表
     public static List<Service> services =new ArrayList<>();
 
     public static void dataInitFunc()
@@ -43,18 +45,21 @@ public class dataInit {
         // 租户总数   3-10
         Integer totalTenant = Common.randomInteger(3,10);
 
-        for (tenId = 1; tenId <= totalTenant; tenId++) {
+        for (tenId = 1; tenId <= totalTenant; tenId++)
+        {
             Integer tenantLevel = Common.randomInteger(1,3);
             Tenant tenant = new Tenant(tenId, tenantLevel);
             Integer applicationPerTenant = Common.randomInteger(1,10);
             List<Application> applicationList = new ArrayList<>(applicationPerTenant);
-            for (int j = 1; j <= applicationPerTenant; j++) {
+            for (int j = 1; j <= applicationPerTenant; j++)
+            {
                 Integer applicationLevel = Common.randomInteger(1,3);
                 Application application = new Application(appId, applicationLevel, tenId);
                 Integer pageView = Common.randomInteger(40,100);
                 Integer servicePerApplication = Common.randomInteger(4,12);
                 List<Service> serviceList = new ArrayList<>(servicePerApplication);
-                for (int k = 1; k < servicePerApplication; k++) {
+                for (int k = 1; k < servicePerApplication; k++)
+                {
                     Integer serviceLevel = Common.randomInteger(1,3);
                     Service service = Common.toService(serviceLevel, serId);
                     Integer serviceCapacity = Common.randomInteger(1,12);
