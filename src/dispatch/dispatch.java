@@ -120,7 +120,7 @@ public class dispatch {
                 Integer max =0;
                 // 选择 t1s2 策略；
                 optimiseStrategy strategy =new t1s2();
-                for(int j=0;j<20;j++)
+                for(int j=0;j<DataInit.goodSelect;j++)
                 {
                     List<Integer> integers =result.get(j);
                     List<Service> serviceList = new ArrayList<>();
@@ -131,7 +131,7 @@ public class dispatch {
                             serviceList.add(services.get(i));
                         }
                     }
-                    Integer res =t1s2.calcuScore(serviceList);
+                    Integer res =strategy.calcuScore(serviceList);
                     // 从20种情况中选择此背包。
                     if(res>max)
                     {

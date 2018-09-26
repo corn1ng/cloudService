@@ -10,4 +10,9 @@ public class allEqual implements optimiseStrategy {
     public List<Service> selectStategy(List<Service> services) {
         return null;
     }
+
+    @Override
+    public Integer calcuScore(List<Service> services) {
+        return null;
+    }
 }

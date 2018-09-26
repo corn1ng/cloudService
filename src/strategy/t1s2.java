@@ -61,7 +61,7 @@ public class t1s2 implements optimiseStrategy {
     }
 
     // 优选分数计算
-    public static Integer calcuScore(List<Service> services)
+    public Integer calcuScore(List<Service> services)
     {
         Integer result = 0;
         for(int i=0;i<services.size();i++)

@@ -36,6 +36,9 @@ public class DataInit {
     // 服务列表
     public static List<Service> services =new ArrayList<>();
 
+    // 优选参数
+    public static Integer goodSelect =3;
+
     public static void dataInitFunc()
     {
         Random random =new Random();
