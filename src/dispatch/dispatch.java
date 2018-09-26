@@ -110,7 +110,7 @@ public class dispatch {
 //                    result.add(list);
 //                }
 
-                YCalgorithm alg = new YCalgorithm(servicePV, services.size(),services.size()/2, 200, 0.5f, 0.05f, 0.1f);
+                YCalgorithm alg = new YCalgorithm(servicePV, services.size(),services.size()/2, 2000, 0.5f, 0.05f, 0.1f);
                 result =alg.solve();
 
                 // end

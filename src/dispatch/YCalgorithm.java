@@ -27,8 +27,8 @@ public class YCalgorithm {
     private boolean[][] population = null; //上一代种群
     private float[] fitness = null; //种群的适应度
 
-    private float bestFitness; //最优个体的价值
-    private boolean[] bestUnit = null; //最优个体的物品取舍策略
+    //private float bestFitness; //最优个体的价值
+    //private boolean[] bestUnit = null; //最优个体的物品取舍策略
 
     class SortFitness implements Comparable<SortFitness>{
         int index;
@@ -47,22 +47,22 @@ public class YCalgorithm {
 
     /**
      * @param capacity : 背包容量
+     * @param len : 染色体长度
      * @param scale ： 种群规模
      * @param maxgen ： 最大代数
      * @param irate ： 交叉率（所有的个体都需要相互交叉的，这里的交叉率指交叉时每位交叉发生交叉的可能性）
      * @param arate1 ：变异率（某个个体发生变异的可能性）
      * @param arate2 ：对于确定发生变异的个体每位发生变异的可能性
+     **/
 
-     */
     public YCalgorithm(Integer capacity, int len ,int scale, int maxgen, float irate, float arate1, float arate2) {
         this.capacity = capacity;
+        this.len = len;
         this.scale = scale;
         this.maxgen = maxgen;
         this.irate = irate;
         this.arate1 = arate1;
         this.arate2 = arate2;
-        this.len =len;
-
         random = new Random(System.currentTimeMillis());
     }
 
@@ -70,11 +70,9 @@ public class YCalgorithm {
     private void readDate(List<Service> list, List<SLA> slas) {
         for(int i=0;i<list.size();i++)
         {
-
             weight.add(list.get(i).getRealPV());
             profit.add(slas.get(i).getPrice()-list.get(i).getCost());
         }
-        len = weight.size();
     }
 
     //初始化初始种群
@@ -127,6 +125,29 @@ public class YCalgorithm {
         }
     }
 
+
+
+    private float eva(List<Integer> unit) {
+        float profitSum = 0;
+        float weightSum = 0;
+        for (int i = 0; i < unit.size(); i++) {
+            if (unit.get(i)==1) {
+                weightSum += weight.get(i);
+                profitSum += profit.get(i);
+            }
+            else
+            {   // 如果不满足的话，不仅不计算利润，还要往回扣钱。
+                profitSum-= DataInit.slas.get(i).getService().getCompensateRate() * profit.get(i);
+            }
+        }
+        if (weightSum > capacity) {
+            //该个体的对应的所有物品的重量超过了背包的容量
+            return 0;
+        } else {
+            return profitSum;
+        }
+    }
+
     //计算种群所有个体的适应度
     private void calcFitness() {
         for(int i = 0; i < scale; i++) {
@@ -135,17 +156,17 @@ public class YCalgorithm {
     }
 
     //记录最优个体
-    private void recBest(int gen) {
-        for(int i = 0; i < scale; i++) {
-            if(fitness[i] > bestFitness) {
-                bestFitness = fitness[i];
-                bestUnit = new boolean[len];
-                for(int j = 0; j < len; j++) {
-                    bestUnit[j] = population[i][j];
-                }
-            }
-        }
-    }
+//    private void recBest(int gen) {
+//        for(int i = 0; i < scale; i++) {
+//            if(fitness[i] > bestFitness) {
+//                bestFitness = fitness[i];
+//                bestUnit = new boolean[len];
+//                for(int j = 0; j < len; j++) {
+//                    bestUnit[j] = population[i][j];
+//                }
+//            }
+//        }
+//    }
 
     //种群个体选择
     //选择策略：适应度前10%的个体带到下一次循环中，然后在（随机生成10%的个体 + 剩下的90%个体）中随机取90%出来
@@ -155,6 +176,7 @@ public class YCalgorithm {
             sortFitness[i] = new SortFitness();
             sortFitness[i].index = i;
             sortFitness[i].fitness = fitness[i];
+
         }
         Arrays.sort(sortFitness);
 
@@ -231,32 +253,47 @@ public class YCalgorithm {
     // 计算前k%的结果用于后续筛选
     private List<List<Integer>> endSelect(Integer k) {
         SortFitness[] sortFitness = new SortFitness[scale];
+
         for (int i = 0; i < scale; i++) {
             sortFitness[i] = new SortFitness();
             sortFitness[i].index = i;
-            sortFitness[i].fitness = fitness[i];
+            sortFitness[i].fitness = evaluate(population[i]);
+            //System.out.println(;
         }
         Arrays.sort(sortFitness);
         List<List<Integer> > endPopulation = new ArrayList<>();
+        DataInit.goodSelect = (int) (scale * k / 10);
+        System.out.println("scale="+ scale + "reserve=" +DataInit.goodSelect);
+
+        for (int i = 0; i < DataInit.goodSelect; i++) {
+            System.out.println(sortFitness[i].fitness);
+            List<Integer> pop =new ArrayList<>(len);
+            for (int j = 0; j < len; j++) {
+                pop.add(population[sortFitness[i].index][j] ? 1 : 0);
+            }
+
+            endPopulation.add(pop);
+
+        }
 
 
         //boolean[][] tmpPopulation = new boolean[scale][len];
 
         //保留前k%的个体
-        int reserve = (int) (scale * k / 10);
+        //int reserve = (int) (scale * k / 10);
+        //System.out.println("scale="+ scale + "reserve=" +reserve);
 
-        for (int i = 0; i < reserve; i++) {
-            List<Integer> pop =new ArrayList<>(len);
-            for (int j = 0; j < len; j++) {
-                pop.add(population[sortFitness[i].index][j] ?1:0);
-            }
-            endPopulation.add(pop);
-        }
+//        for (int i = 0; i < reserve; i++) {
+//
+//            for (int j = 0; j < len; j++) {
+//                pop.add(population[sortFitness[i].index][j] ?1:0);
+//            }
+//            endPopulation.add(pop);
+//            //System.out.println(eva(pop));
+//        }
+
         return endPopulation;
     }
-
-
-
 
 
     //遗传算法
@@ -275,7 +312,7 @@ public class YCalgorithm {
             //发生变异
             aberra();
         }
-        List<List<Integer>> population =endSelect(10);
+        List<List<Integer>> population =endSelect(2);
 
 //        int totalWeight = 0;
 //        for(int i = 0; i < bestUnit.length; i++) {
