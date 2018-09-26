@@ -40,23 +40,23 @@ public class DataInit {
     {
         Random random =new Random();
         //TotalPV 3000-9000
-        Integer totlaPV = Common.randomInteger(3000,9000);
+        Integer totlaPV = 8000;
 
         // 租户总数   3-10
-        Integer totalTenant = Common.randomInteger(3,10);
+        Integer totalTenant = 8;
 
         for (tenId = 1; tenId <= totalTenant; tenId++)
         {
             Integer tenantLevel = Common.randomInteger(1,3);
             Tenant tenant = new Tenant(tenId, tenantLevel);
-            Integer applicationPerTenant = Common.randomInteger(1,10);
+            Integer applicationPerTenant = 8;
             List<Application> applicationList = new ArrayList<>(applicationPerTenant);
             for (int j = 1; j <= applicationPerTenant; j++)
             {
                 Integer applicationLevel = Common.randomInteger(1,3);
                 Application application = new Application(appId, applicationLevel, tenId);
                 Integer pageView = Common.randomInteger(40,100);
-                Integer servicePerApplication = Common.randomInteger(4,12);
+                Integer servicePerApplication = 10;
                 List<Service> serviceList = new ArrayList<>(servicePerApplication);
                 for (int k = 1; k < servicePerApplication; k++)
                 {

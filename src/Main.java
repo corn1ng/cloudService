@@ -47,10 +47,10 @@ public class Main {
             t1s2 stra =new t1s2();
             //stra.selectStategy(services);
 
-            for(Service s:services)
-            {
-                System.out.println(s.tostring());
-            }
+//            for(Service s:services)
+//            {
+//                System.out.println(s.tostring());
+//            }
         }
     }
 }

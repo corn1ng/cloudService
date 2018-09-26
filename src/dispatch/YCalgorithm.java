@@ -53,11 +53,11 @@ public class YCalgorithm {
      * @param irate ： 交叉率（所有的个体都需要相互交叉的，这里的交叉率指交叉时每位交叉发生交叉的可能性）
      * @param arate1 ：变异率（某个个体发生变异的可能性）
      * @param arate2 ：对于确定发生变异的个体每位发生变异的可能性
-     */
+     **/
 
     public YCalgorithm(Integer capacity, int len ,int scale, int maxgen, float irate, float arate1, float arate2) {
         this.capacity = capacity;
-        this.len =len;
+        this.len = len;
         this.scale = scale;
         this.maxgen = maxgen;
         this.irate = irate;
@@ -73,7 +73,6 @@ public class YCalgorithm {
             weight.add(list.get(i).getRealPV());
             profit.add(slas.get(i).getPrice()-list.get(i).getCost());
         }
-        len = weight.size();
     }
 
     //初始化初始种群
@@ -132,6 +131,29 @@ public class YCalgorithm {
         }
     }
 
+
+
+    private float eva(List<Integer> unit) {
+        float profitSum = 0;
+        float weightSum = 0;
+        for (int i = 0; i < unit.size(); i++) {
+            if (unit.get(i)==1) {
+                weightSum += weight.get(i);
+                profitSum += profit.get(i);
+            }
+            else
+            {   // 如果不满足的话，不仅不计算利润，还要往回扣钱。
+                profitSum-= DataInit.slas.get(i).getService().getCompensateRate() * profit.get(i);
+            }
+        }
+        if (weightSum > capacity) {
+            //该个体的对应的所有物品的重量超过了背包的容量
+            return 0;
+        } else {
+            return profitSum;
+        }
+    }
+
     //计算种群所有个体的适应度
     private void calcFitness() {
         for(int i = 0; i < scale; i++) {
@@ -161,13 +183,14 @@ public class YCalgorithm {
             sortFitness[i] = new SortFitness();
             sortFitness[i].index = i;
             sortFitness[i].fitness = fitness[i];
+
         }
         Arrays.sort(sortFitness);
 
         boolean[][] tmpPopulation = new boolean[scale][len];
 
         //保留前10%的个体
-        int reserve = (int)(scale * 0.2);
+        int reserve = (int)(scale * 0.1);
         for(int i = 0; i < reserve; i++) {
             for(int j = 0; j < len; j++) {
                 tmpPopulation[i][j] = population[sortFitness[i].index][j];
@@ -237,47 +260,96 @@ public class YCalgorithm {
     // 计算前k%的结果用于后续筛选
     private List<List<Integer>> endSelect(Integer k) {
         SortFitness[] sortFitness = new SortFitness[scale];
+
         for (int i = 0; i < scale; i++) {
             sortFitness[i] = new SortFitness();
             sortFitness[i].index = i;
-            sortFitness[i].fitness = fitness[i];
+            sortFitness[i].fitness = evaluate(population[i]);
+            //System.out.println(;
         }
         Arrays.sort(sortFitness);
         List<List<Integer> > endPopulation = new ArrayList<>();
+        int reserve = (int) (scale * k / 10);
+        System.out.println("scale="+ scale + "reserve=" +reserve);
+
+        for (int i = 0; i < reserve; i++) {
+            System.out.println(sortFitness[i].fitness);
+            List<Integer> pop =new ArrayList<>(len);
+            for (int j = 0; j < len; j++) {
+                pop.add(population[sortFitness[i].index][j] ? 1 : 0);
+            }
+
+            endPopulation.add(pop);
+
+        }
 
 
         //boolean[][] tmpPopulation = new boolean[scale][len];
 
         //保留前k%的个体
-        int reserve = (int) (scale * k / 10);
+        //int reserve = (int) (scale * k / 10);
+        //System.out.println("scale="+ scale + "reserve=" +reserve);
 
-        for (int i = 0; i < reserve; i++) {
-            List<Integer> pop =new ArrayList<>(len);
-            for (int j = 0; j < len; j++) {
-                pop.add(population[sortFitness[i].index][j] ?1:0);
-            }
-            endPopulation.add(pop);
-        }
+//        for (int i = 0; i < reserve; i++) {
+//
+//            for (int j = 0; j < len; j++) {
+//                pop.add(population[sortFitness[i].index][j] ?1:0);
+//            }
+//            endPopulation.add(pop);
+//            //System.out.println(eva(pop));
+//        }
+
         return endPopulation;
     }
 
 
     //遗传算法
     public List<List<Integer>> solve() {
+        long t1=0;
+        long t2=0;
+        long t3=0;
+        long t4=0;
+        long t5=0;
+        long t6=0;
+
         readDate(DataInit.services,DataInit.slas);
+        long before1= System.currentTimeMillis();//获取当前系统时间(毫秒)
         initPopulation();
+        long after1 =System.currentTimeMillis();
+        t1 =t1+(after1-before1);
+        System.out.println("初始化时间"+ (t1));
+
         for(int i = 0; i < maxgen; i++) {
-            //计算种群适应度值
+            long before2= System.currentTimeMillis();//获取当前系统时间(毫秒)
             calcFitness();
-            //记录最优个体
-            //recBest(i);
-            //进行种群选择
+            long after2= System.currentTimeMillis();//获取当前系统时间(毫秒)
+            //System.out.println("计算适应度时间"+ (after2-before2));
+            t2 =t2+(after2-before2);
+
+            long before3= System.currentTimeMillis();//获取当前系统时间(毫秒)
             select();
-            //进行交叉
+            long after3= System.currentTimeMillis();//获取当前系统时间(毫秒)
+            //System.out.println("选择时间"+ (after3-before3));
+            t3=t3+(after3-before3);
+
+            long before4= System.currentTimeMillis();//获取当前系统时间(毫秒)
             intersect();
-            //发生变异
+            long after4= System.currentTimeMillis();//获取当前系统时间(毫秒)
+            //System.out.println("交叉时间"+ (after4-before4));
+            t4 =t4+(after4-before4);
+
+            long before5= System.currentTimeMillis();//获取当前系统时间(毫秒)
             aberra();
+            long after5= System.currentTimeMillis();//获取当前系统时间(毫秒)
+            //System.out.println("变异时间"+ (after5-before5));
+            t5= t5+(after5-before5);
         }
+
+        long before6= System.currentTimeMillis();//获取当前系统时间(毫秒)
+        List<List<Integer>> in =endSelect(2);
+        long after6= System.currentTimeMillis();//获取当前系统时间(毫秒)
+        System.out.println("优选时间"+ (after6-before6));
+        t6 =t6+after6-before6;
 
 //        int totalWeight = 0;
 //        for(int i = 0; i < bestUnit.length; i++) {
@@ -285,7 +357,14 @@ public class YCalgorithm {
 //                totalWeight += weight.get(i);
 //            }
 //        }
-        return endSelect(10);
+        System.out.println("初始化: "+t1
+                            +" 计算适应度: "+t2
+                            +" 选择："+t3
+                            +" 交叉: "+t4
+                            +" 变异: "+t5
+                            +" 优选: "+t6);
+
+        return in;
     }
 
 }

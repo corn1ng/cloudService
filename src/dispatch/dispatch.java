@@ -20,6 +20,7 @@ public class dispatch {
         if(realPV<servicePV*0.95)
         {
             Integer surpuls = servicePV-realPV;
+            //Double nowRate = Double.valueOf(realPV/servicePV);
             System.out.println("低负载状态，准入请求。当前时间片剩余容量"+surpuls);
 
             // 选择 t1s2 策略；
@@ -36,6 +37,7 @@ public class dispatch {
                 DataInit.costId =services.get(c).getCost()+DataInit.costId;
             }
             /*价格计算结束*/
+
             for(i=0;surpuls>=0 && i<services.size();i++)
             {
                 if((services.get(i).getRealPV()-slaList.get(i).getPageView())>0)
@@ -67,9 +69,7 @@ public class dispatch {
                     services.get(i).setAdmitPV(services.get(i).getRealPV());
                     services.get(i).setRejectPV(0);
                 }
-
             }
-            //System.out.println("当前");
         }
         else
         {
@@ -110,7 +110,7 @@ public class dispatch {
 //                    result.add(list);
 //                }
 
-                YCalgorithm alg = new YCalgorithm(servicePV, services.size(),services.size()/2, 200, 0.5f, 0.05f, 0.1f);
+                YCalgorithm alg = new YCalgorithm(servicePV, services.size(),services.size()/2, 2000, 0.5f, 0.05f, 0.1f);
                 result =alg.solve();
 
                 // end
