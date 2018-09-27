@@ -10,9 +10,9 @@ public class SLA {
     private Integer tenantId;
     // 应用序号
     private Integer appId;
-//    //租户等级
+//  租户等级
 //    private Integer TenantLevel;
-//    // 应用等级
+//   应用等级
 //    private Integer ApplicationLevel;
     // 服务
     private Service service;

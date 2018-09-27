@@ -90,25 +90,7 @@ public class dispatch {
                 System.out.println("已超载！"+" 服务层提供"+servicePV+" 实际使用"+realPV);
                 Random random =new Random();
                 List<List<Integer>> result  =null;
-                // 遗传算法start
-//
-//                for(int i=0;i<20;i++)
-//                {
-//                    List<Integer> list =new ArrayList<>();
-//                    for(int j=0;j<services.size();j++)
-//                    {
-//                        Integer index =random.nextInt(3)+1;
-//                        if(index!=1)
-//                            index=0;
-//                        list.add(index);
-//                    }
-////                    for(int k=0;k<list.size();k++)
-////                    {
-////                        System.out.print(list.get(k)+" ");
-////                    }
-////                    System.out.println(" ");
-//                    result.add(list);
-//                }
+
 
                 YCalgorithm alg = new YCalgorithm(servicePV, services.size(),services.size()/2, 2000, 0.5f, 0.05f, 0.1f);
                 result =alg.solve();
