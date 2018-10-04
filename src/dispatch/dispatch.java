@@ -137,6 +137,19 @@ public class dispatch {
                     }
                 }
                 System.out.println(" ");
+
+
+
+                /*、先来先服务*/
+//                for(int i=0;i<services.size();i++)
+//                {
+//                    services.get(i).getRealPV()
+//                }
+
+
+
+
+                /*、*/
             }
         }
     }

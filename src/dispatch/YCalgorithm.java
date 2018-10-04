@@ -271,9 +271,7 @@ public class YCalgorithm {
             for (int j = 0; j < len; j++) {
                 pop.add(population[sortFitness[i].index][j] ? 1 : 0);
             }
-
             endPopulation.add(pop);
-
         }
 
 
